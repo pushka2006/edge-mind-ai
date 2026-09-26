@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDGE MIND AI — Video Showcase Demo & Walkthrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(30, 41, 59, 0.8);
+      --accent: #f97316;
+      --accent-glow: rgba(249, 115, 22, 0.25);
+      --cyan: #06b6d4;
+      --green: #22c55e;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      height: 64px;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .brand-title {
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+    .main-layout {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+    }
+    .video-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .video-card {
+      background: #020617;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      position: relative;
+    }
+    .video-card img, .video-card video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .video-meta {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .video-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .video-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .chapters-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .sidebar-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .card-heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .chapter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .chapter-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chapter-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--card-border);
+    }
+    .chapter-item.active {
+      background: rgba(249, 115, 22, 0.12);
+      border-color: rgba(249, 115, 22, 0.4);
+    }
+    .chap-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .chap-info {
+      flex: 1;
+    }
+    .chap-title {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .chap-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .gallery-grid {
+      grid-column: 1 / -1;
+      margin-top: 16px;
+    }
+    .gallery-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .thumbs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .thumb-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .thumb-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    .thumb-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .thumb-caption {
+      padding: 12px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand">
+      <span class="brand-badge">VIDEO DEMO</span>
+      <span class="brand-title">EDGE MIND AI — Operational Walkthrough</span>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <a href="index.html" class="btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        Open Slide Deck
+      </a>
+      <a href="../EDGE_MIND_AI_Presentation.pptx" download class="btn btn-primary">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PPTX
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Showcase Container -->
+  <div class="main-layout">
+    
+    <!-- Video Player Area -->
+    <div class="video-section">
+      <div class="video-card">
+        <!-- Recorded WebP Video Animation -->
+        <img src="../edge_mind_ai_demo.webp" alt="EDGE MIND AI Full Platform Demo Video">
+      </div>
+
+      <div class="video-meta">
+        <h1 class="video-title">EDGE MIND AI — Full Enterprise Platform Walkthrough</h1>
+        <p class="video-desc">
+          Live browser session recording showcasing the end-to-end operation of EDGE MIND AI. Highlights include on-device 128-dimensional vector memory retrieval, 1-click offline simulation mode with delta synchronization queueing, sub-3ms semantic search, multi-master conflict resolution diffing, EdgeMind conversational AI with memory citations, and 5-device industrial fleet telemetry.
+        </p>
+      </div>
+    </div>
+
+    <!-- Chapter Index / Highlights Sidebar -->
+    <div class="chapters-sidebar">
+      <div class="sidebar-card">
+        <div class="card-heading">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Walkthrough Chapters
+        </div>
+        <div class="chapter-list">
+          <div class="chapter-item active">
+            <span class="chap-badge">01</span>
+            <div class="chap-info">
+              <div class="chap-title">Dashboard & Telemetry</div>
+              <div class="chap-desc">520 memories, active sync state, device runtime.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">02</span>
+            <div class="chap-info">
+              <div class="chap-title">Simulate Offline Mode</div>
+              <div class="chap-desc">Zero cloud dependency; queue accumulation.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">03</span>
+            <div class="chap-info">
+              <div class="chap-title">Vector Memory Inspector</div>
+              <div class="chap-desc">128-dim dense embedding & provenance.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">04</span>
+            <div class="chap-info">
+              <div class="chap-title">Semantic Vector Search</div>
+              <div class="chap-desc">Sub-3ms match for vibration anomalies.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">05</span>
+            <div class="chap-info">
+              <div class="chap-title">Conflict Center Diffing</div>
+              <div class="chap-desc">3-way comparison: Local, Cloud, Synthesized.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">06</span>
+            <div class="chap-info">
+              <div class="chap-title">EdgeMind Offline Assistant</div>
+              <div class="chap-desc">Local RAG citing verified memory IDs.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">07</span>
+            <div class="chap-info">
+              <div class="chap-title">5-Device Fleet Telemetry</div>
+              <div class="chap-desc">CNC milling, robotics, kiosks, and drones.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">08</span>
+            <div class="chap-info">
+              <div class="chap-title">Topological Memory Graph</div>
+              <div class="chap-desc">Interactive physics-based node network.</div>
+            </div>
+          </div>
+          <div class="chapter-item">
+            <span class="chap-badge">09</span>
+            <div class="chap-info">
+              <div class="chap-title">11-Step Industrial Demo</div>
+              <div class="chap-desc">Live edge-to-cloud transition walkthrough.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <div class="card-heading">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Quick Links
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <a href="../EDGE_MIND_AI_Presentation.pptx" download class="btn" style="justify-content: center;">
+            Download PPTX Presentation
+          </a>
+          <a href="index.html" class="btn" style="justify-content: center;">
+            Interactive HTML Slide Deck
+          </a>
+          <a href="https://github.com/pushka2006/edge-mind-ai" target="_blank" class="btn" style="justify-content: center;">
+            GitHub Repository
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gallery of Screen Highlights -->
+    <div class="gallery-grid">
+      <h2 class="gallery-title">Key Operational Highlights from Recording</h2>
+      <div class="thumbs-grid">
+        <div class="thumb-card">
+          <img src="screenshots/dashboard_overview_1790424076218.png" alt="Dashboard Overview">
+          <div class="thumb-caption">Main Fleet & Vector Telemetry Dashboard</div>
+        </div>
+        <div class="thumb-card">
+          <img src="screenshots/offline_mode_active_1790424114318.png" alt="Offline Mode Simulation">
+          <div class="thumb-caption">Simulate Offline Mode Active (Zero Cloud)</div>
+        </div>
+        <div class="thumb-card">
+          <img src="screenshots/memory_inspector_modal_1790424225555.png" alt="Vector Inspector Modal">
+          <div class="thumb-caption">128-Dimensional Vector Embedding Inspector</div>
+        </div>
+        <div class="thumb-card">
+          <img src="screenshots/semantic_search_results_1790424451723.png" alt="Semantic Search">
+          <div class="thumb-caption">Instant Local Semantic Vector Search</div>
+        </div>
+        <div class="thumb-card">
+          <img src="screenshots/conflict_center_diff_1790424526224.png" alt="Conflict Center">
+          <div class="thumb-caption">3-Way Multi-Master Conflict Diffing</div>
+        </div>
+        <div class="thumb-card">
+          <img src="screenshots/edgemind_ai_chat_response_1790424678726.png" alt="EdgeMind AI Chat">
+          <div class="thumb-caption">EdgeMind Offline RAG citing Memory IDs</div>
+        </div>
+        <div class="thumb-card">
+          <img src="screenshots/edge_devices_fleet_1790424770749.png" alt="Edge Fleet">
+          <div class="thumb-caption">5-Device Industrial Fleet Management</div>
+        </div>
+        <div class="thumb-card">
+          <img src="screenshots/memory_graph_topology_1790424835329.png" alt="Topology Graph">
+          <div class="thumb-caption">Topological Knowledge & Component Graph</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

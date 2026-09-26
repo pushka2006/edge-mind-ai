@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EDGE MIND AI — Executive Presentation Slide Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(30, 41, 59, 0.8);
+      --accent: #f97316;
+      --accent-glow: rgba(249, 115, 22, 0.25);
+      --cyan: #06b6d4;
+      --green: #22c55e;
+      --red: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Top Bar */
+    header {
+      height: 60px;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-badge {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+    .brand-title {
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
+    }
+
+    /* Presentation Deck Container */
+    .deck-container {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 32px;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      width: min(94vw, 1300px);
+      height: min(84vh, 720px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      display: none;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .slide-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .slide-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .slide-content-grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 32px;
+      overflow: hidden;
+    }
+    .single-col {
+      grid-template-columns: 1fr;
+    }
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+    }
+    .info-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+    .info-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--cyan);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-desc {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bullet-list li {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-muted);
+      position: relative;
+      padding-left: 20px;
+    }
+    .bullet-list li strong {
+      color: #fff;
+    }
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 18px;
+      line-height: 1;
+    }
+    .screenshot-frame {
+      background: #020617;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .screenshot-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Title Slide Custom Style */
+    .hero-center {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 20px;
+    }
+    .hero-title {
+      font-size: 54px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #f97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-subtitle {
+      font-size: 20px;
+      color: var(--cyan);
+      max-width: 800px;
+      line-height: 1.5;
+    }
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    /* Footer Controls */
+    footer {
+      height: 64px;
+      background: rgba(10, 14, 23, 0.9);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      z-index: 100;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .slide-indicator {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .keyboard-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    kbd {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand">
+      <span class="brand-badge">EDGE MIND AI</span>
+      <span class="brand-title">Executive Presentation Deck</span>
+    </div>
+    <div class="header-actions">
+      <a href="../edge_mind_ai_demo.webp" target="_blank" class="btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Watch Video Demo
+      </a>
+      <a href="../video_player.html" class="btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        Video Showcase Player
+      </a>
+      <a href="../EDGE_MIND_AI_Presentation.pptx" download class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PPTX (.pptx)
+      </a>
+    </div>
+  </header>
+
+  <!-- Slide Deck Presentation Area -->
+  <main class="deck-container">
+
+    <!-- SLIDE 1: Hero Cover -->
+    <section class="slide active" id="slide-1">
+      <div class="hero-center">
+        <div class="slide-tag">ENTERPRISE OFFLINE-FIRST AI INFRASTRUCTURE</div>
+        <h1 class="hero-title">EDGE MIND AI</h1>
+        <p class="hero-subtitle">AI-Powered Edge Memory & Intelligence Platform<br>Local Intelligence • Persistent Vector Memory • Cloud Synchronization</p>
+        <div class="hero-pills">
+          <span class="pill">⚡ Sub-5ms Local Recall</span>
+          <span class="pill">📡 100% Offline Autonomy</span>
+          <span class="pill">🔄 Priority Delta Sync</span>
+          <span class="pill">⚖️ Multi-Master Consensus</span>
+          <span class="pill">🔒 TPM Hardware Enclave</span>
+        </div>
+        <div style="margin-top: 15px; font-size: 13px; color: var(--text-muted);">
+          Author: Pushkar | Repository: <a href="https://github.com/pushka2006/edge-mind-ai" target="_blank" style="color: var(--accent); text-decoration: none;">github.com/pushka2006/edge-mind-ai</a> | Production Release v1.0
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Executive Overview & Dashboard -->
+    <section class="slide" id="slide-2">
+      <div class="slide-tag">SLIDE 02 // PLATFORM OVERVIEW</div>
+      <h2 class="slide-title">Executive Overview: Autonomous Edge Intelligence</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>The Cloud Latency Wall:</strong> Standard cloud LLM queries incur 200ms–2s roundtrip delays, choking industrial robotics and CNC controllers.</li>
+            <li><strong>Embedded Vector Engine:</strong> On-device 128-dimensional dense vector indexing delivers &lt;5ms local retrieval with zero cloud dependency.</li>
+            <li><strong>Resilient Operation:</strong> When connectivity drops, EdgeMind AI captures telemetry, resolves queries, and stages a priority sync queue.</li>
+            <li><strong>Live Telemetry Monitoring:</strong> Active tracking of 520 memories, 5 edge devices, and real-time sync health across the entire fleet.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/dashboard_overview_1790424076218.png" alt="Dashboard Overview">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: Offline Simulation & Resilience -->
+    <section class="slide" id="slide-3">
+      <div class="slide-tag">SLIDE 03 // OFFLINE RESILIENCE</div>
+      <h2 class="slide-title">Offline-First Resilience: Zero Cloud Dependency</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>Simulate Offline Mode Toggle:</strong> 1-click interactive switch immediately isolates the edge node from cloud APIs.</li>
+            <li><strong>Zero Degradation:</strong> Local vector search, memory generation, and EdgeMind offline AI continue functioning with 100% capacity.</li>
+            <li><strong>Delta Queue Accumulation:</strong> New memories are staged in a local prioritized sync buffer (CRITICAL, HIGH, NORMAL).</li>
+            <li><strong>Automatic Reconnection:</strong> Restoring network triggers instant cryptographic payload verification and background delta streaming.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/offline_mode_active_1790424114318.png" alt="Offline Mode Simulation">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Memory Inspector -->
+    <section class="slide" id="slide-4">
+      <div class="slide-tag">SLIDE 04 // VECTOR ARCHITECTURE</div>
+      <h2 class="slide-title">Memory Inspector: High-Dimensional Vector Embeddings</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>128-Dim Dense Embeddings:</strong> Custom on-device vector generation optimized for machine telemetry, vibrational signatures, and logs.</li>
+            <li><strong>Memory Inspector Modal:</strong> Engineers inspect raw vector floats, cosine bounds, timestamp provenance, and hardware tags.</li>
+            <li><strong>Cryptographic Integrity:</strong> Every memory block is sealed with SHA-256 integrity hashes to guarantee tamper detection.</li>
+            <li><strong>Version History Snapshots:</strong> Full immutable chain-of-custody tracking reviewer changes, AI modifications, and sensor audits.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/memory_inspector_modal_1790424225555.png" alt="Memory Inspector Modal">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Semantic Vector Search -->
+    <section class="slide" id="slide-5">
+      <div class="slide-tag">SLIDE 05 // HYBRID RETRIEVAL</div>
+      <h2 class="slide-title">Hybrid Retrieval: Vector Distance & Keyword Scoring</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>Natural Language Queries:</strong> Engineers search via plain phrases like "spindle vibration anomaly" or "bearing thermal spike".</li>
+            <li><strong>Sub-3ms Local Matching:</strong> On-device cosine distance scoring computes similarity in real-time without sending packets to the cloud.</li>
+            <li><strong>Match Confidence Scoring:</strong> Demonstrated similarity scores up to 98.4% ranking critical telemetry incidents at the top.</li>
+            <li><strong>Faceted Filtering:</strong> Filter instantly by device ID (DEV-001), severity class (ANOMALY, WARNING), or synchronization state.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/semantic_search_results_1790424451723.png" alt="Semantic Search Results">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6: Conflict Center -->
+    <section class="slide" id="slide-6">
+      <div class="slide-tag">SLIDE 06 // DATA CONSISTENCY</div>
+      <h2 class="slide-title">Conflict Center: Multi-Master State Reconciliation</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>Network Partition Divergence:</strong> Identifies records modified concurrently at the edge device and cloud server during an outage.</li>
+            <li><strong>3-Way Visual Diffing:</strong> Clear inspection panel displaying Local Edge state, Cloud Server state, and AI Synthesized preview.</li>
+            <li><strong>Strategy 1: Keep Local:</strong> Edge hardware sensor measurements override cloud estimations.</li>
+            <li><strong>Strategy 2: Keep Cloud:</strong> Enterprise-wide configuration parameters override edge modifications.</li>
+            <li><strong>Strategy 3: AI Synthesis:</strong> EdgeMind LLM merges sensor telemetry with cloud work order notes into an authoritative record.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/conflict_center_diff_1790424526224.png" alt="Conflict Center 3-Way Diff">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7: EdgeMind AI Assistant -->
+    <section class="slide" id="slide-7">
+      <div class="slide-tag">SLIDE 07 // LOCAL RAG ASSISTANT</div>
+      <h2 class="slide-title">Conversational AI: Offline RAG with Memory Citations</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>Grounded Answers:</strong> Synthesizes natural language explanations using exclusively locally indexed vector memories.</li>
+            <li><strong>Verifiable Citations:</strong> Every assertion links directly to memory IDs (e.g., [M-1024], [M-1026]) eliminating hallucinations.</li>
+            <li><strong>Industrial Diagnostic Assistance:</strong> Explains complex operational incidents like high-torque milling anomalies and bearing temperatures.</li>
+            <li><strong>Edge Model Routing:</strong> Uses EdgeMind-Nano-8B locally and seamlessly switches to Titan-Cloud when high-capacity uplinks are available.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/edgemind_ai_chat_response_1790424678726.png" alt="EdgeMind AI Chat Response">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8: Industrial Multi-Device Fleet -->
+    <section class="slide" id="slide-8">
+      <div class="slide-tag">SLIDE 08 // FLEET MANAGEMENT</div>
+      <h2 class="slide-title">Fleet Management: Multi-Device Telemetry & Health</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>DEV-001 (Machine Edge #01):</strong> CNC 5-Axis Milling Cell monitoring vibrations & thermals.</li>
+            <li><strong>DEV-002 (Robotic Arm #04):</strong> Assembly robotics tracking joint torque and encoder logs.</li>
+            <li><strong>DEV-003 (Smart Kiosk #02):</strong> Public interactive point-of-service node.</li>
+            <li><strong>DEV-004 (Autonomous Drone #09):</strong> Tactical inspection aerial drone with intermittent radio.</li>
+            <li><strong>DEV-005 (Sensor Hub #07):</strong> Environmental telemetry array logging ambient pressure.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/edge_devices_fleet_1790424770749.png" alt="Edge Fleet Telemetry">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9: Topological Memory Graph -->
+    <section class="slide" id="slide-9">
+      <div class="slide-tag">SLIDE 09 // TOPOLOGY VISUALIZATION</div>
+      <h2 class="slide-title">Memory Graph: Interactive Node Network Topology</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>Relational Visual Mapping:</strong> Connects edge machine components to sensor anomalies, diagnostic classifications, and cloud replicas.</li>
+            <li><strong>Physics-Based Interaction:</strong> Dynamic force-directed graph with drag-and-drop nodes, zoom, and component grouping.</li>
+            <li><strong>Incident Traceability:</strong> Trace how a spindle bearing overheating event links to maintenance work orders and resolution memos.</li>
+            <li><strong>Cross-Cluster Replication:</strong> Highlights which nodes are synchronized to central Qdrant and which remain locally buffered.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/memory_graph_topology_1790424835329.png" alt="Memory Graph Topology">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: 11-Step Simulation -->
+    <section class="slide" id="slide-10">
+      <div class="slide-tag">SLIDE 10 // VERIFICATION WORKFLOW</div>
+      <h2 class="slide-title">Verification Workflow: 11-Step Live Edge Simulation</h2>
+      <div class="slide-content-grid">
+        <div class="left-panel">
+          <ul class="bullet-list">
+            <li><strong>Sub-5ms Vector Recall:</strong> Local 128-dim cosine distance lookup executes in &lt;4.8ms average latency on edge hardware.</li>
+            <li><strong>84% Bandwidth Savings:</strong> Priority delta streaming transfers only changed vector diffs rather than full payload retransmissions.</li>
+            <li><strong>100% Offline Uptime:</strong> Zero failure or query timeouts during simulated satellite network severance.</li>
+            <li><strong>11-Step Interactive Walkthrough:</strong> Simulates baseline setup, thermal spikes, offline capture, cloud conflict, and AI resolution.</li>
+          </ul>
+        </div>
+        <div class="screenshot-frame">
+          <img src="screenshots/edge_demo_step_3_1790424959580.png" alt="Edge Demo Simulation">
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: Summary & Roadmap -->
+    <section class="slide" id="slide-11">
+      <div class="slide-tag">SLIDE 11 // SUMMARY & ROADMAP</div>
+      <h2 class="slide-title">Enterprise Governance & Deployment Roadmap</h2>
+      <div class="slide-content-grid single-col">
+        <div class="left-panel">
+          <div class="info-card">
+            <div class="info-title">🛡️ Hardware-Enclave AES-256 & TPM Root of Trust</div>
+            <div class="info-desc">All on-device memory stores and vector files are encrypted at rest using device-bound hardware keys with tamper-proof cryptographic auditing.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-title">✈️ Air-Gapped Compliance</div>
+            <div class="info-desc">Strict LOCAL_ONLY security policies ensure defense, industrial secrets, and sensitive medical telemetry never leave physical hardware boundaries.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-title">📦 Immediate Production Deployment</div>
+            <div class="info-desc">Lightweight containerization for Qdrant Edge, plug-and-play Next.js management console, and documented REST APIs.</div>
+          </div>
+          <div class="info-card">
+            <div class="info-title">🌐 Open-Source Codebase</div>
+            <div class="info-desc">Full repository with architecture specs available at <a href="https://github.com/pushka2006/edge-mind-ai" target="_blank" style="color: var(--accent); font-weight: 600;">github.com/pushka2006/edge-mind-ai</a>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation & Keyboard Shortcuts -->
+  <footer>
+    <div class="nav-controls">
+      <button class="btn" id="prev-btn" onclick="prevSlide()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        Previous
+      </button>
+      <button class="btn" id="next-btn" onclick="nextSlide()">
+        Next
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <span class="slide-indicator" id="slide-indicator">Slide 1 of 11</span>
+    </div>
+    <div class="keyboard-hint">
+      Use <kbd>←</kbd> <kbd>→</kbd> or <kbd>Space</kbd> to navigate slides
+    </div>
+  </footer>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 11;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      document.getElementById(`slide-${index}`).classList.add('active');
+      
+      currentSlide = index;
+      document.getElementById('slide-indicator').textContent = `Slide ${currentSlide} of ${totalSlides}`;
+      document.getElementById('prev-btn').disabled = (currentSlide === 1);
+      document.getElementById('next-btn').disabled = (currentSlide === totalSlides);
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'Home') {
+        showSlide(1);
+      } else if (e.key === 'End') {
+        showSlide(totalSlides);
+      }
+    });
+
+    showSlide(1);
+  </script>
+</body>
+</html>
